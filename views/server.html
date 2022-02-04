@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Server</title>
+    <link rel="shortcut icon" href="/logo.gif" type="image/gif" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="//db.onlinewebfonts.com/c/721c73bcd2e49f3a621991089838b503?family=Euclid+Circular+B+Medium"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
+
+  <body>
+    <section class="main">
+      <!--Main Navigation-->
+      <header>
+        <!-- Sidebar -->
+        <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse">
+          <div class="position-sticky">
+            <div class="list-group list-group-flush mx-3 mt-4">
+              <a
+                href="/dashboard"
+                class="list-group-item list-group-item-action py-2 ripple"
+                style="
+                  background: rgba(255, 255, 255, 0.35);
+                  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+                  backdrop-filter: blur(9px);
+                  -webkit-backdrop-filter: blur(9px);
+                  border-radius: 10px;
+                  border: 1px solid rgba(255, 255, 255, 0.18);
+                "
+                aria-current="true"
+              >
+                <i class="fas fa-tachometer-alt fa-fw me-3"></i
+                ><span>Main Dashboard</span>
+              </a>
+              <br />
+              <a
+                href="/servers"
+                class="list-group-item list-group-item-action py-2 ripple"
+                style="
+                  background: rgba(255, 255, 255, 0.35);
+                  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+                  backdrop-filter: blur(9px);
+                  -webkit-backdrop-filter: blur(9px);
+                  border-radius: 10px;
+                  border: 1px solid rgba(255, 255, 255, 0.18);
+                "
+              >
+                <i class="fas fa-server fa-fw me-3"></i
+                ><span>Manage Servers</span>
+              </a>
+              <br />
+              <a
+                href="/logout"
+                class="list-group-item list-group-item-action py-2 ripple"
+                style="
+                  background: rgba(255, 255, 255, 0.35);
+                  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+                  backdrop-filter: blur(9px);
+                  -webkit-backdrop-filter: blur(9px);
+                  border-radius: 10px;
+                  border: 1px solid rgba(255, 255, 255, 0.18);
+                "
+              >
+                <i class="fas fa-sign-out-alt fa-fw me-3"></i
+                ><span>Logout</span>
+              </a>
+            </div>
+          </div>
+        </nav>
+        <!-- Sidebar -->
+
+        <!-- Navbar -->
+        <nav
+          id="main-navbar"
+          class="navbar navbar-expand-lg navbar-light fixed-top"
+        >
+          <!-- Container wrapper -->
+          <div class="container-fluid">
+            <!-- Toggle button -->
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-mdb-toggle="collapse"
+              data-mdb-target="#sidebarMenu"
+              aria-controls="sidebarMenu"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+              onclick="function re(){ let r = $('#sidebarMenu'); if(r.hasClass('collapse'))r.removeClass('collapse');else r.addClass('collapse')}re()"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+
+            <!-- Brand -->
+            <a class="navbar-brand text-white" href="/">
+              <img src="/logo.gif" height="40" alt="" loading="lazy" />
+              Dashboard - Manage Server
+            </a>
+            <div>
+              <h1 class="server-name"></h1>
+            </div>
+          </div>
+        </nav>
+        <!-- Navbar -->
+      </header>
+      <!--Main Navigation-->
+
+      <!--Main layout-->
+      <main style="margin-top: 58px">
+        <div class="container pt-4">
+          <!--Section: Manage Server -->
+          <section>
+            <h1>Manage Server</h1>
+            <div class="row">
+              <div class="col-xl-3 col-sm-6 col-12 mb-4">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between px-md-1">
+                      <div>
+                        <h3 class="text-danger" id="songInQueue">0</h3>
+                        <p class="mb-0">Songs In Queue</p>
+                      </div>
+                      <div class="align-self-center">
+                        <i class="fas fa-music text-danger fa-3x"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-6 col-12 mb-4">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between px-md-1">
+                      <div>
+                        <h3 class="text-success" id="songLoop"></h3>
+                        <p class="mb-0">Song Loop</p>
+                      </div>
+                      <div class="align-self-center">
+                        <i class="fas fa-redo text-success fa-3x"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-6 col-12 mb-4">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between px-md-1">
+                      <div>
+                        <h3 class="text-warning" id="queueLoop"></h3>
+                        <p class="mb-0">Queue Loop</p>
+                      </div>
+                      <div class="align-self-center">
+                        <i class="fas fa-sync text-warning fa-3x"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-6 col-12 mb-4">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between px-md-1">
+                      <div>
+                        <h3 class="text-info" id="prefix">&gt;</h3>
+                        <p class="mb-0">Prefix</p>
+                      </div>
+                      <div class="align-self-center">
+                        <i class="fas fa-robot text-info fa-3x"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><section id="queue">
+        <br><br>
+            
+                <!-- CURRENT SONG CARD-->
+                <center>
+                    <h1 style="font-size: 100px;color:#828cff"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 20" class="iconify" data-icon="dashicons:format-audio" style="vertical-align: -0.125em; transform: rotate(360deg);"><path d="M6.99 3.08l11.02-2c.55-.08.99.45.99 1V14.5c0 1.94-1.57 3.5-3.5 3.5S12 16.44 12 14.5c0-1.93 1.57-3.5 3.5-3.5c.54 0 1.04.14 1.5.35V5.08l-9 2V16c-.24 1.7-1.74 3-3.5 3C2.57 19 1 17.44 1 15.5C1 13.57 2.57 12 4.5 12c.54 0 1.04.14 1.5.35V4.08c0-.55.44-.91.99-1z" fill="currentColor"></path></svg> Current Song:</h1>
+                </center>
+                
+                <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+                    <!-- CURRENT SONG-->
+                    <div style="width:900px;height:350px;border: solid 5px #828cff;border-radius: 15px;">
+                        <div id="nowplaying" style="position: relative;width:800px;height:300px;margin-left: 50px;margin-top: 25px;">
+                            <img class="img-thumbnail" style="width:43%; height: 70%;border-radius: 10px;" src="https://img.youtube.com/vi/c-w9Gcib868/mqdefault.jpg" alt="Olmaz">
+                            <div class="progresswrapper" style="position: absolute; width:100%;bottom: 0px;">
+                                
+                                <div class="progress" style="height:25px;border-radius: 15px;background: #4a4a52;">
+                                    <div style="width:10%" id="getir-gotur" class="progress-bar progress-bar-striped progress-bar-animated " role="progressbar" aria-valuenow="98" aria-valuemin="0" aria-valuemax="322"> 
+                                    </div>
+                                </div> 
+                                <b style="font-size: 24px">01:19</b><b style="float:right;font-size: 24px;">05:22</b>
+                            </div>
+                            <h3 style="position: absolute; margin-left:45%;top: 0px;width:450px;height:80px;">Olmaz</h3>
+                            <h4 style="font-size: 20px;position: absolute; margin-left:45%;top: 100px;width:440px;height:80px;">
+                                <img src="https://cdn.discordapp.com/avatars/445334682091913217/c534210ec2e42e8ebf52ec2b3bd0a8fc.webp?size=4096" style="width:30px">
+                                <b>Requested by:</b> <kdl style="background-color: #1b1b1b;border: solid 5px #1b1b1b;border-radius: 5px;">Metin Tuğcan<span style="font-size: 15px;color:#65656e;">#1454</span></kdl>
+                            </h4>
+                            <h4 style="font-size: 20px;position: absolute; margin-left:45%;top: 145px;width:440px;height:80px;">
+                                <img src="https://cdn.discordapp.com/emojis/840260133686870036.png?v=1" style="width:30px">
+                                <kdl style="background-color: #1b1b1b;border: solid 5px #1b1b1b;border-radius: 5px;">2.77M</kdl>
+                            </h4>
+                            <h4 style="font-size: 20px;position: absolute; margin-left:68%;top: 145px;width:440px;height:80px;">
+                                <img src="https://cdn.discordapp.com/emojis/783353957719998474.gif?v=1" style="width:30px">
+                                <kdl style="background-color: #1b1b1b;border: solid 5px #1b1b1b;border-radius: 5px;">18.18k</kdl>
+                            </h4>
+                            <h4 style="font-size: 20px;position: absolute; margin-left:87%;top: 145px;width:440px;height:80px;">
+                                <img src="https://cdn.discordapp.com/emojis/783353914610810881.gif?v=1" style="width:30px">
+                                <kdl style="background-color: #1b1b1b;border: solid 5px #1b1b1b;border-radius: 5px;">0</kdl>
+                            </h4>
+                            <h4 style="font-size: 20px;position: absolute; margin-left:45%;top: 190px;width:440px;height:80px;">
+                                <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/twitter/282/hourglass-done_231b.png" style="width:30px">
+                                <b>Duration:</b> <kdl style="background-color: #1b1b1b;border: solid 5px #1b1b1b;border-radius: 5px;">05:22 | 322 Seconds</kdl>
+                            </h4>
+                        </div>
+                    </div>
+                    <!-- CONTROLS -->
+                    <!--<div style="width:450px;height:350px;border: solid 5px #828cff;border-radius: 15px;margin-left:1%;vertical-align: middle;">
+                        <center><h1 style="font-size: 50px;color:#828cff"><i class="iconify" data-icon="il:controls"></i> Controls</h1></center>
+                        
+                        <button style="font-size: 30px;width: 100%;"
+                            class="btn btn-primary" type="button">
+                            <i class="iconify" data-icon="dashicons:controls-skipforward" ></i>
+                            Skip</button>
+                            <button style="font-size: 30px;width: 100%;"
+                                class="btn btn-danger" type="button">
+                                <i class="iconify" data-icon="fa-solid:stop" ></i>
+                                Stop</button>
+                            
+                            <button style="font-size: 30px;width: 100%;"
+                                class="btn btn-primary" type="button">
+                                <i class="iconify" data-icon="dashicons:controls-pause" ></i>
+                                Pause</button>
+                            
+                    </div> -->
+                </div>
+                <br>
+                <hr>
+                <br>
+                <!-- SHOWING THE QUEUE-->
+                <center>
+                    <h1 style="font-size: 100px;color:#828cff"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16" class="iconify" data-icon="bi:music-note-list" style="vertical-align: -0.125em; transform: rotate(360deg);"><g fill="currentColor"><path d="M12 13c0 1.105-1.12 2-2.5 2S7 14.105 7 13s1.12-2 2.5-2s2.5.895 2.5 2z"></path><path fill-rule="evenodd" d="M12 3v10h-1V3h1z"></path><path d="M11 2.82a1 1 0 0 1 .804-.98l3-.6A1 1 0 0 1 16 2.22V4l-5 1V2.82z"></path><path fill-rule="evenodd" d="M0 11.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 .5 7H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 .5 3H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5z"></path></g></svg> Show the <b>Music Queue</b>  [<span id="queueamount"> 1 Songs </span>]</h1>
+                </center>
+                <div style="display: flex; flex-wrap: wrap; justify-content: center;" id="wholequeue">
+                    <div id="currentsong" class="card mb-3 text-white bg-info mb-3">
+                        <img class="card-img-top" src="https://img.youtube.com/vi/c-w9Gcib868/mqdefault.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: #ffffff "><b>0.</b> <a href="https://www.youtube.com/watch?v=c-w9Gcib868" style="text-decoration: none;color: #ffffff" target="_blank">Olmaz</a></h5>
+                            <p class="mt-auto card-text"><small class="text-muted" style="color: #1b1b1b !important;">Requested by: Metin Tuğcan#1454</small></p>
+                            <p class="mt-auto card-text"><small class="text-muted" style="color: #1b1b1b !important">Duration: 00:19 / 05:22</small></p>                          
+                            </div>
+                    </div>
+                    
+                </div>
+            
+    </section>
+            <div class="container text-center" id="song-info">
+              <h1>Song Info</h1>
+              <p>Now Playing: <span id="now-playing"></span></p>
+              <br />
+              <p>Duration</p>
+              <p id="duration"></p>
+            </div>
+          </section>
+          <!-- Footer -->
+          <div class="footer">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="copyright-text">
+                    <p>
+                      © 2021
+                      <a href="//github.com/SudhanPlayz/Discord-MusicBot"
+                        >Discord Music Bot</a
+                      >. All rights reserved. Made by
+                      <a href="//github.com/SudhanPlayz">Sudhan</a> and its
+                      <a
+                        href="//github.com/SudhanPlayz/Discord-MusicBot/graphs/contributors"
+                        >contributors</a
+                      >
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Footer -->
+        </div>
+      </main>
+      <!--Main layout-->
+    </section>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <div class="circle1"></div>
+    <div class="circle2"></div>
+    <div class="circle3"></div>
+  </body>
+  <style>
+    @font-face {
+      font-family: "Euclid Circular B Medium";
+      src: url("//db.onlinewebfonts.com/t/721c73bcd2e49f3a621991089838b503.eot");
+      src: url("//db.onlinewebfonts.com/t/721c73bcd2e49f3a621991089838b503.eot?#iefix")
+          format("embedded-opentype"),
+        url("//db.onlinewebfonts.com/t/721c73bcd2e49f3a621991089838b503.woff2")
+          format("woff2"),
+        url("//db.onlinewebfonts.com/t/721c73bcd2e49f3a621991089838b503.woff")
+          format("woff"),
+        url("//db.onlinewebfonts.com/t/721c73bcd2e49f3a621991089838b503.ttf")
+          format("truetype"),
+        url("//db.onlinewebfonts.com/t/721c73bcd2e49f3a621991089838b503.svg#Euclid Circular B Medium")
+          format("svg");
+    }
+
+    body {
+      background: linear-gradient(to right, #8a2387, #e94057, #f27121);
+      color: #fff;
+      overflow-x: hidden;
+      font-family: "Euclid Circular B Medium", Poppins;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.35);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(9px);
+      -webkit-backdrop-filter: blur(9px);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      z-index: 2;
+    }
+
+    @media (min-width: 991.98px) {
+      main {
+        padding-left: 240px;
+      }
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      padding: 100px 0 0; /* Height of navbar */
+      width: 240px;
+    }
+
+    .circle1,
+    .circle2,
+    .circle3 {
+      background: linear-gradient(
+        to right bottom,
+        rgba(255, 255, 255, 0.2),
+        rgba(255, 255, 255, 0.1)
+      );
+      position: absolute;
+      border-radius: 50%;
+      z-index: -100;
+    }
+
+    .circle1 {
+      top: 5%;
+      right: 5%;
+      height: 10rem;
+      width: 10rem;
+    }
+    .circle2 {
+      top: 10%;
+      left: 10%;
+      border-radius: 50%;
+      height: 8rem;
+      width: 8rem;
+    }
+    .circle3 {
+      bottom: 10%;
+      left: 5%;
+      border-radius: 50%;
+      height: 6rem;
+      width: 6rem;
+    }
+
+    @media (max-width: 991.98px) {
+      .sidebar {
+        width: 100%;
+        z-index: 100;
+      }
+    }
+    .sidebar .active {
+      box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    }
+
+    .sidebar-sticky {
+      position: relative;
+      top: 0;
+      height: calc(100vh - 48px);
+      padding-top: 0.5rem;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    #song-info span {
+      color: #5867dd;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    #song-info span:hover {
+      color: #34bfa3;
+    }
+
+    .footer {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      background-color: red;
+      color: white;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(9px);
+      -webkit-backdrop-filter: blur(9px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .footer p {
+      margin: 0;
+      line-height: 26px;
+      font-size: 15px;
+      color: #fff;
+    }
+
+    .footer p a {
+      background: linear-gradient(to right, #8a2387, #e94057, #f27121);
+      color: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      text-decoration: none;
+    }
+
+    .footer p a:hover {
+      color: white;
+    }
+  </style>
+  <script>
+    $(document).ready(() => {
+      $.get("/api/user", (data) => {
+        let Guild = data.user.guilds.find(
+          (x) => x.id == window.location.pathname.split("/")[2]
+        );
+        if (!Guild.inGuild) {
+          $.get("/api/info", (data) => {
+            window.location = `https://discord.com/oauth2/authorize?client_id=${
+              data.ClientID
+            }&permissions=${data.Permissions}&scope=bot%20${data.Scopes.join(
+              "%20"
+            )}&redirect_uri=${data.Website}${
+              data.CallbackURL
+            }&response_type=code`;
+          });
+        }
+        $(".server-name").text(Guild.name);
+      });
+
+      var socket = io();
+      socket.emit("server", window.location.pathname.split("/")[2]);
+
+      socket.on("server", (data) => {
+        $("#songInQueue").text(data.bare);
+        $("#songLoop").text(data.songsLoop);
+        $("#queueLoop").text(data.queueLoop);
+        $("#prefix").text(data.prefix);
+        $("#now-playing").text(
+          data.nowPlaying ? data.nowPlaying.title : "Nothing playing"
+        );
+       $("#nowplaying > img").attr("src",data.nowPlaying.thumbnail);
+       $("#nowplaying > h3").text(data.nowPlaying.title);  $("#getir-gotur").attr("width","100%");
+        if (data.position)
+      
+          $("#duration").html(
+            `${data.position}<span> ${data.bar} </span>${data.maxDuration}`
+          );
+        else
+          $("#duration").html(
+            `<span> Nothing is playing right now, Add some songs in discord? </span>`
+          );
+      });
+    });
+  </script>
+  <script type="text/javascript">
+$(document).ready(function(){  
+    setInterval(function(){
+            //This animates the bar
+           
+            //This does static sets of the value
+            //$("#myProgressBar").progressbar("option","value",p);
+           
+            
+    },500);
+});
+</script>
+</html>
